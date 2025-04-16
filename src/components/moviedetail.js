@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchMovie } from '../actions/movieActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, ListGroup, ListGroupItem, Image, Form, Button} from 'react-bootstrap';
@@ -11,7 +11,7 @@ const MovieDetail = () => {
   const selectedMovie = useSelector(state => state.movie.selectedMovie);
   const loading = useSelector(state => state.movie.loading); // Assuming you have a loading state in your reducer
   const error = useSelector(state => state.movie.error); // Assuming you have an error state in your reducer
-  const [reviewText, setReview] = useState('');
+  const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState(0);
 
 
@@ -43,7 +43,10 @@ const MovieDetail = () => {
         alert('Review submitted!');
         setReviewText('');
         setRating(0);
-        dispatch(fetchMovie(movieId));
+        setTimeout(()=>{
+          dispatch(fetchMovie(movieId));
+        },100)
+        
       } else {
         alert(data.msg || 'Error submitting review.');
       }
